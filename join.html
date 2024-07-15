@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>롯데스위트몰 회원가입</title>
+    <!-- 폰트어썸 CDN 연결 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- reset연결 -->
+    <link rel="stylesheet" href="css/reset.css">
+    <style>
+        /* 구글폰트 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+        /* 한글,영어
+        font-family: 'Noto Sans KR', sans-serif;
+        font-family: 'Poppins', sans-serif; 
+        */
+
+        /* 회원가입 공통 */
+        .join_container {
+            width: 1050px;
+            margin: 0 auto;
+        }
+
+        .pilsoo {
+            position: relative;
+        }
+
+        .pilsoo:before {
+            content: '*';
+            position: absolute;
+            left: 5px;
+            top: 1px;
+            width: 15px;
+            font-size: 17px;
+            font-weight: bold;
+            color: #f00;
+        }
+
+        p.pilsoo {
+            display: inline-block;
+            padding-left: 20px;
+            color: #f00;
+        }
+
+        .dash {
+            display: inline-block;
+            padding: 0 5px;
+            color: #ccc;
+        }
+
+        .golbang {
+            display: inline-block;
+            padding: 0 5px;
+            color: #222;
+        }
+
+        .box {
+            margin-bottom: 30px;
+        }
+
+        .top_tit_box {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding: 0px 0 10px;
+            border-bottom: 1px solid #3a3a3a;
+        }
+
+        .top_tit {
+            font-size: 24px;
+            color: #3a3a3a;
+            font-weight: 600;
+        }
+
+        .content_box>li {
+            padding: 20px 0;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .left_tit {
+            /*clearfix도 줬는지확인!*/
+            float: left;
+            width: 150px;
+            padding-left: 20px;
+            box-sizing: border-box;
+            font-size: 17px;
+            letter-spacing: -2px;
+            line-height: 42px;
+        }
+
+        .right_box {
+            float: right;
+            width: 770px;
+        }
+
+        input {
+            display: inline-block;
+            box-sizing: border-box;
+            height: 45px;
+            padding: 0 10px;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            background: #fff;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .small_btn {
+            border: 1px solid #bdbdbd;
+            color: #222;
+            width: 100px;
+            height: auto;
+            box-sizing: border-box;
+            text-align: center;
+            background: #fff;
+            padding: 8px 0;
+            font-size: 15px;
+            border-radius: 8px;
+            margin-top: 4px;
+            cursor: pointer;
+        }
+
+        .select_box {
+            display: inline-block;
+            box-sizing: border-box;
+            height: 45px;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            background: url(img/select_opt_btn.png) no-repeat right 8px center;
+        }
+
+        .select_box select {
+            display: inline-block;
+            width: 100%;
+            height: 42px;
+            padding: 0 10px 0 14px;
+            border: none;
+            background: none;
+            outline: none;
+            font-size: 15px;
+            appearance: none
+                /* select 화살표 없애기 */
+        }
+
+        .agree_checkbox,
+        .radio {
+            position: absolute;
+            left: -1000px;
+            overflow: hidden;
+            width: 1px;
+            height: 1px;
+            /* 숨겨버림 */
+        }
+
+        .agree_checkbox+label,
+        .radio+label {
+            /*+ label: 바로밑형제인 label*/
+            display: inline-block;
+            background: url(img/join_input_off.gif) no-repeat 0 center;
+            height: 40px;
+            line-height: 40px;
+            background-size: 20px;
+            font-size: 16px;
+            padding-left: 28px;
+            margin-right: 20px;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+
+        .radio+label {
+            background-image: url(img/radio_none.gif);
+        }
+
+        .agree_checkbox:checked+label,
+        .radio:checked+label {
+            /* :checked :체크가 됐을때 +label :라벨은 */
+            background: url(img/join_input_on.gif) no-repeat 0 center;
+        }
+
+        .radio:checked+label {
+            background-image: url(img/radio_on.gif);
+        }
+
+
+
+
+        /* header */
+        .join_header {
+            background: url(img/join_bg.jpg);
+            height: 250px;
+        }
+
+        .join_header h2 {
+            color: #3a3a3a;
+            font-size: 36px;
+            font-weight: 700;
+            text-align: center;
+            line-height: 250px;
+        }
+
+
+
+        /* section */
+        .join_section {
+            padding: 55px 50px 0;
+            box-sizing: border-box;
+        }
+
+        .phone_area .right_box .phone_inzung {
+            box-sizing: border-box;
+            height: 45px;
+            padding: 0 10px;
+            background: url(img/radio_on.gif) no-repeat left center;
+
+            padding-left: 26px;
+            font-size: 14px;
+            line-height: 45px;
+            color: #b5b5b5;
+        }
+
+        .agree_area span {
+            display: block;
+            padding-left: 30px;
+            color: #9a9a9a;
+            font-size: 15px;
+            margin-top: 10px;
+            background: url(img/join_sns_icon.gif) no-repeat left center;
+        }
+
+        .all_agree {
+            font-weight: bold;
+            font-size: 18px !important;
+            color: #3a3a3a;
+        }
+
+        .submit_btn {
+            width: 200px;
+            height: 60px;
+            margin: 40px auto 60px;
+            line-height: 60px;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 18px;
+            text-align: center;
+            background: #ff3d44;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .submit_btn:hover {
+            background: #ef2a24;
+        }
+
+
+
+
+
+
+        /* footer */
+        .footer {
+            width: 100%;
+            background: #f8f8f8;
+            margin-top: 50px;
+            padding: 20px 0 94px;
+        }
+
+        .footer a {
+            font-size: 14px;
+            color: #9a9a9a;
+            transition: 0.3s;
+        }
+
+        .footer a:hover {
+            color: #5a5a5a;
+        }
+
+        .footer .foot_top {
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e9e9e9;
+        }
+
+        .footer .foot_top ul {
+            display: flex;
+            align-items: center
+        }
+
+        .footer .foot_top ul li {}
+
+        .footer .foot_top ul li a {
+            display: block;
+            padding: 0 11px;
+            position: relative;
+        }
+
+        .footer .foot_top ul li a strong {
+            font-size: 15px;
+        }
+
+        .footer .foot_top ul li a:after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 2px;
+            width: 1px;
+            height: 15px;
+            background: #e9e9e9;
+        }
+
+        .footer .foot_top ul li a.afterN:after {
+            background: none;
+        }
+
+        .footer .familySite {
+            outline: none;
+            border: 1px solid #e9e9e9;
+            padding: 9px 6px;
+            cursor: pointer;
+        }
+
+
+
+        .footer .foot_bottom {
+            position: relative;
+        }
+
+        .footer .foot_bottom p {
+            color: #5a5a5a;
+            font-size: 14px;
+            padding: 40px 0 30px;
+        }
+
+        .footer .foot_bottom .info {
+            font-size: 14px;
+            color: #9a9a9a;
+            line-height: 27px;
+            margin-bottom: 40px;
+        }
+
+        .footer .foot_bottom .info a {
+            border: 1px solid #e9e9e9;
+            padding: 2px 4px;
+            border-radius: 8px;
+            margin: 0 4px;
+        }
+
+        .footer .foot_bottom .sns_btn {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            display: flex;
+        }
+
+        .footer .foot_bottom .sns_btn li {
+            margin-right: 10px;
+        }
+
+        .footer .foot_bottom .sns_btn li:last-child {
+            margin-right: 0;
+        }
+
+        .footer .foot_bottom .sns_btn li a {
+            display: block;
+            width: 45px;
+            height: 45px;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            text-align: center;
+        }
+
+        .footer .foot_bottom .sns_btn li a i {
+            line-height: 45px;
+            font-size: 24px;
+        }
+
+        .footer .foot_bottom span {
+            display: block;
+            color: #5a5a5a;
+            font-size: 14px;
+        }
+
+        .footer .foot_bottom em {
+            font-size: 14px;
+            color: #9a9a9a;
+        }
+
+        .footer .foot_bottom .copyright {
+            margin-top: 25px;
+            color: #a0a0a0;
+            font-size: 13px;
+        }
+
+        .footer .foot_bottom .mobile_info {
+            display: none;
+        }
+
+
+
+
+
+        /* 반응형(미디어쿼리) */
+        @media(max-width:1220px) {
+            .join_container {
+                width: 100%;
+            }
+            .left_tit{width: 30%;}
+            .right_box{width: 70%;}
+            .w60p{width: 70% !important;}
+
+
+
+
+
+
+            /* footer */
+            .footer .join_container {
+                width: 100%;
+                padding: 0 2%;
+                box-sizing: border-box;
+            }
+
+            .footer .foot_top ul li a {
+                padding: 0 1.5vw;
+            }
+
+
+        }/* //1220 */
+        
+        @media(max-width:1024px) {
+            input{font-size: 14px;}
+            .join_header h2{font-size: 35px;}
+            .top_tit{font-size: 23px;}
+            .left_tit{font-size: 16px;}
+            .small_btn{font-size: 14px;}
+            p.pilsoo{font-size: 15px;}
+            .submit_btn{
+                width: 194px;
+                height: 58px;
+                font-size: 17px;
+            }
+
+            /* footer */
+            .footer a {
+                font-size: 13.5px;
+            }
+
+            .footer .foot_bottom .info {
+                font-size: 13.3px;
+            }
+        }/* //1024 */
+        
+        @media(max-width:960px) {
+            .join_header{height: 190px;}
+            .join_header h2{
+                line-height: 190px;
+                font-size: 30px;
+            }
+            .top_tit{font-size: 21px;}
+            .left_tit{
+                width: 25%;
+                font-size: 15px;
+            }
+            .right_box{width: 75%;}
+            .small_btn{
+                width: 92px;
+                padding: 6px 0;
+            }
+            .w60p{width: 70% !important;}
+            .small_btn{width: 79px;}
+            .w15p{width: 20% !important;}
+            .w20p{width: 36% !important;}
+            p.pilsoo
+            .select_box select,
+            .agree_area span,
+            .agree_checkbox+label, .radio+label,
+            .select_box select{font-size: 14px;}
+            #yang + label,
+            #eum + label{display: none;}
+            .all_agree{font-size: 15px !important;}
+            .content_box>li{padding: 16px 0;}
+
+            /* footer */
+            .footer {
+                padding: 35px 0 94px;
+            }
+
+            .footer .familySite {
+                display: none;
+            }
+
+            .footer .foot_top {
+                display: block;
+            }
+
+            .footer .foot_top ul {
+                justify-content: center;
+                margin-bottom: 10px;
+            }
+
+            .footer .foot_top ul li a {
+                padding: 0 2vw;
+            }
+
+            .footer .foot_bottom {
+                text-align: center;
+            }
+
+            .footer .foot_bottom p {
+                padding: 30px 0;
+                font-size: 13.3px;
+            }
+
+            .footer .foot_bottom .sns_btn {
+                position: static;
+                justify-content: center;
+                margin-bottom: 20px;
+            }
+
+            .footer .foot_bottom .info {
+                display: none;
+            }
+
+            .footer .foot_bottom .mobile_info {
+                display: block;
+                margin-bottom: 20px;
+                font-size: 13.3px;
+                color: #9a9a9a;
+                line-height: 27px;
+            }
+
+            .footer .foot_bottom span {
+                font-size: 13.3px;
+            }
+
+            .footer .foot_bottom em {
+                font-size: 13.3px;
+                display: inline-block;
+                width: 260px;
+            }
+
+            .footer .foot_bottom .copyright {
+                width: 280px;
+                margin: 20px auto 0;
+                font-size: 13px;
+            }
+
+        }/* //960 */
+
+        @media(max-width:600px) {
+            .join_header{height: 100px;}
+            .join_header h2{line-height: 100px;}
+            .join_header h2{font-size: 24px;}
+            .top_tit{font-size: 19px;}
+            p.pilsoo{font-size: 14px;}
+            .join_section{padding: 40px 8px 0;}
+            .left_tit{width: 100%; font-size: 14px;}
+            .right_box{width: 100%;}
+            .phone_area .right_box .phone_inzung{
+                display: inline-block;
+                width: 38% !important;
+            }
+            .small_btn{display: inline-block;}
+            .w60p{width: 100% !important;}
+            input{height: 40px;}
+            .w15p{width: 25% !important;}
+            .golbang{padding: 0;}
+            .select_box select{padding: 0 5px 0 8px;}
+            .w20p{width: 38% !important;}
+            .w10p{width: 15% !important;}
+            .all_agree{font-size: 14px !important;}
+            .submit_btn{
+                width: 160px;
+                height: 48px;
+                font-size: 16px;
+                line-height: 48px;
+            }
+
+            /* footer */
+            .footer .foot_top ul li {
+                display: inline-block;
+                padding: 0 2%;
+                box-sizing: border-box;
+            }
+
+            .footer .foot_top ul li a {
+                font-size: 11.93px;
+                padding: 0;
+            }
+
+            .footer .foot_top ul li a strong {
+                font-size: 12px;
+            }
+
+            .footer .foot_top ul li a:after {
+                right: -6px;
+            }
+
+            .footer .foot_bottom p,
+            .footer .foot_bottom .mobile_info,
+            .footer .foot_bottom span,
+            .footer .foot_bottom em,
+            .footer .foot_bottom .copyright {
+                font-size: 12px;
+            }
+        }/* //600 */
+
+        @media(max-width:320px) {
+
+        }/* //320 */
+
+        
+    </style>
+</head>
+
+<body>
+    <div id="join_wrap">
+        <div class="join_header">
+            <div class="join_container">
+                <h2 class="ir">회원가입</h2>
+                <h2>회원가입</h2>
+            </div>
+        </div><!-- //join_header -->
+
+        <div class="join_section">
+            <div class="join_container">
+                <form action="#">
+                    <fieldset>
+                        <!-- 회원인증 -->
+                        <div class="box">
+                            <div class="top_tit_box">
+                                <legend class="ir">회원인증</legend>
+                                <h3 class="top_tit">회원인증</h3>
+                                <p class="pilsoo">필수 입력</p>
+                            </div>
+                            <ul class="content_box phone_area">
+                                <li class="clearfix">
+                                    <!-- label의 for = input의 id -->
+                                    <em class="pilsoo left_tit">휴대폰 인증</em>
+                                    <div class="right_box">
+                                        <div class="phone_inzung w60p">휴대폰 인증</div>
+                                        <button class="small_btn" title="휴대폰 인증하기">
+                                            휴대폰 인증
+                                        </button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div><!-- //box -->
+
+                        <!-- 기본정보 -->
+                        <div class="box">
+                            <div class="top_tit_box">
+                                <legend class="ir">기본정보</legend>
+                                <h3 class="top_tit">기본정보</h3>
+                                <p class="pilsoo">필수 입력</p>
+                            </div>
+                            <ul class="content_box">
+                                <li class="clearfix">
+                                    <!-- label의 for = input의 id -->
+                                    <label for="member_id" class="pilsoo left_tit">아이디</label>
+                                    <div class="right_box">
+                                        <input type="text" id="member_id" class="w60p" placeholder='영문소문자/숫자, 4~16자'
+                                            title="영문소문자/숫자, 4~16자">
+                                    </div>
+                                </li><!-- //아이디 -->
+
+                                <li class="clearfix">
+                                    <!-- label의 for = input의 id -->
+                                    <label for="member_pass" class="pilsoo left_tit">비밀번호</label>
+                                    <div class="right_box">
+                                        <input type="password" id="member_pass" class="w60p"
+                                            placeholder='영문(대소문자구분)/숫자/특수문자 중 2가지 이상 조합, 8자~16자'
+                                            title="영문(대소문자구분)/숫자/특수문자 중 2가지 이상 조합, 8자~16자">
+                                    </div>
+                                </li><!-- //비밀번호 -->
+
+                                <li class="clearfix">
+                                    <!-- label의 for = input의 id -->
+                                    <label for="member_pass_re" class="pilsoo left_tit">비밀번호 확인</label>
+                                    <div class="right_box">
+                                        <input type="password" id="member_pass_re" class="w60p" title="비밀번호 확인">
+                                    </div>
+                                </li><!-- //비밀번호 확인 -->
+
+                                <li class="clearfix">
+                                    <!-- label의 for = input의 id -->
+                                    <label for="member_name" class="pilsoo left_tit">이름</label>
+                                    <div class="right_box">
+                                        <input type="text" id="member_name" class="w60p" title="이름">
+                                    </div>
+                                </li><!-- //이름 -->
+
+                                <li class="clearfix">
+                                    <!-- label의 for = input의 id -->
+                                    <label for="member_address" class="left_tit">주소</label>
+                                    <div class="right_box">
+                                        <input type="text" id="member_address" class="w60p" title="기본주소">
+                                        <button class="small_btn ml5" title="우편번호">
+                                            우편번호
+                                        </button>
+                                        <input type="text" id="member_name" class="w60p mt10" title="상세주소"
+                                            placeholder="상세주소">
+                                    </div>
+                                </li><!-- //주소 -->
+
+                                <li class="clearfix">
+                                    <!-- label의 for = input의 id -->
+                                    <label class="pilsoo left_tit">휴대전화</label>
+                                    <div class="right_box">
+                                        <div class="select_box w15p">
+                                            <select title="휴대전화">
+                                                <option value="010">010</option>
+                                                <option value="011">011</option>
+                                                <option value="016">016</option>
+                                                <option value="017">017</option>
+                                                <option value="018">018</option>
+                                                <option value="019">019</option>
+                                            </select>
+                                        </div><!-- //select_box -->
+                                        <span class="dash"> - </span>
+                                        <input type="text" class="w15p">
+                                        <span class="dash"> - </span>
+                                        <input type="text" class="w15p">
+                                    </div>
+                                </li><!-- //휴대전화 -->
+
+                                <li class="clearfix">
+                                    <!-- label의 for = input의 id -->
+                                    <label class="pilsoo left_tit">이메일</label>
+                                    <div class="right_box">
+                                        <input type="text" class="w25p">
+                                        <span class="golbang"> @ </span>
+                                        <input type="text" class="w25p" title="이메일 제공업체 입력">
+                                        <div class="select_box w20p">
+                                            <select title="이메일 제공업체 목록">
+                                                <option value="">naver.com</option>
+                                                <option value="">gmail.com</option>
+                                                <option value="">hanmail.net</option>
+                                                <option value="">daum.net</option>
+                                                <option value="">nate.com</option>
+                                            </select>
+                                        </div><!-- //select_box -->
+                                    </div>
+                                </li><!-- //이메일 -->
+
+                                <li class="clearfix agree_area">
+                                    <!-- label의 for = input의 id -->
+                                    <label class="left_tit">수신여부</label>
+                                    <div class="right_box">
+                                        <input id="sms_agree" type="checkbox" class="agree_checkbox">
+                                        <label for="sms_agree">SMS 수신동의</label>
+                                        <input id="email_agree" type="checkbox" class="agree_checkbox">
+                                        <label for="email_agree">이메일 수신동의</label>
+
+                                        <span>이벤트정보, 기타 다양한 정보를 빠르게 만나실 수 있습니다.</span>
+                                    </div>
+                                </li><!-- //수신여부 -->
+                            </ul>
+                        </div><!-- //box -->
+
+                        <!-- 성별~추천인아이디 -->
+                        <div class="box border_top mt80">
+                            <ul class="content_box">
+                                <li class="clearfix agree_area">
+                                    <!-- label의 for = input의 id -->
+                                    <label class="left_tit pilsoo">성별</label>
+                                    <div class="right_box">
+                                        <input type="radio" id="man" name="gender" class="radio">
+                                        <label for="man">남</label>
+
+                                        <input type="radio" id="woman" name="gender" class="radio">
+                                        <label for="woman">여</label>
+                                    </div>
+                                </li><!-- //수신여부 -->
+
+                                <li class="clearfix">
+                                    <!-- label의 for = input의 id -->
+                                    <label class="pilsoo left_tit">생년월일</label>
+                                    <div class="right_box">
+                                        <input type="text" class="w15p">
+                                        <span class="golbang"> 년 </span>
+                                        <input type="text" class="w10p">
+                                        <span class="golbang"> 월 </span>
+                                        <input type="text" class="w10p">
+                                        <span class="golbang"> 일 </span>
+
+                                        <input type="radio" id="yang" class="radio" name="yang_eum">
+                                        <label for="yang" class="mr5 ml10">양력</label>
+
+                                        <input type="radio" id="eum" class="radio" name="yang_eum">
+                                        <label for="eum">음력</label>
+                                    </div>
+                                </li><!-- //휴대전화 -->
+
+                                <li class="clearfix">
+                                    <!-- label의 for = input의 id -->
+                                    <label for="how_come" class="left_tit">유입경로</label>
+                                    <div class="right_box">
+                                        <input type="text" id="how_come" class="w60p" title="유입경로">
+                                    </div>
+                                </li><!-- //유입경로 -->
+
+                                <li class="clearfix">
+                                    <!-- label의 for = input의 id -->
+                                    <label for="how_who" class="left_tit">추천인 아이디</label>
+                                    <div class="right_box">
+                                        <input type="text" id="how_who" class="w60p" title="추천인 아이디">
+                                    </div>
+                                </li><!-- //추천인 아이디 -->
+                            </ul>
+                        </div>
+
+                        <!-- 약관동의 -->
+                        <div class="box mt80">
+                            <div class="top_tit_box">
+                                <legend class="ir">약관동의</legend>
+                                <h3 class="top_tit">약관동의</h3>
+                            </div>
+                            <ul class="content_box">
+                                <li class="clearfix agree_area">
+                                    <input id="all_agree" type="checkbox" class="agree_checkbox together_check">
+                                    <label for="all_agree" class="all_agree ml20">이용약관 및 개인정보수집 및 이용에 모두 동의합니다.</label>
+                                </li><!-- //모두 동의 -->
+
+                                <li class="clearfix agree_area">
+                                    <input id="agree1" type="checkbox" class="agree_checkbox together_check"
+                                        name="sub_agree">
+                                    <label for="agree1" class="ml20">[필수] 이용약관 동의</label>
+                                </li><!-- //동의1 -->
+
+                                <li class="clearfix agree_area">
+                                    <input id="agree2" type="checkbox" class="agree_checkbox together_check"
+                                        name="sub_agree">
+                                    <label for="agree2" class="ml20">[필수] 개인정보 수집 및 이용 동의</label>
+                                </li><!-- //동의2 -->
+
+                                <li class="clearfix agree_area">
+                                    <input id="agree3" type="checkbox" class="agree_checkbox together_check"
+                                        name="sub_agree">
+                                    <label for="agree3" class="ml20">[필수] 14세 이상 가입동의</label>
+                                </li><!-- //동의2 -->
+
+                                <li class="clearfix agree_area">
+                                    <input id="agree4" type="checkbox" class="agree_checkbox together_check"
+                                        name="sub_agree">
+                                    <label for="agree4" class="ml20">[선택] 마케팅 정보 이용 동의</label>
+                                </li><!-- //동의2 -->
+
+                            </ul>
+                        </div>
+                    </fieldset>
+                </form>
+
+                <div class="submit_btn">
+                    회원가입
+                </div>
+            </div>
+        </div><!-- //join_section -->
+
+        <div class="footer">
+            <div class="join_container">
+                <div class="foot_top">
+                    <ul>
+                        <li><a href="#">회사소개</a></li>
+                        <li><a href="#">이용약관</a></li>
+                        <li><a href="#"><strong>개인정보처리방침</strong></a></li>
+                        <li><a href="#">스위트 팩토리</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="#">공지사항</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">비회원문의</a></li>
+                        <li><a href="#" class="afterN">대량구매문의</a></li>
+                        <select name="familySite" title="패밀리사이트" class="familySite">
+                            <option value="FAMILY SITE">FAMILY SITE</option>
+                            <option value="롯데그룹">롯데그룹</option>
+                            <option value="롯데제과">롯데제과</option>
+                            <option value="나뚜루">-나뚜루</option>
+                            <option value="헬스원">-헬스원</option>
+                            <option value="롯데칠성음료">롯데칠성음료</option>
+                            <option value="롯데칠성몰">-롯데칠성몰</option>
+                            <option value="롯데푸드">롯데푸드</option>
+                            <option value="파스퇴르몰">-파스퇴르몰</option>
+                            <option value="롯데중앙연구소">롯데중앙연구소</option>
+                            <option value="LPOINT">LPOINT</option>
+                        </select>
+                    </ul>
+                </div><!-- //foot_top -->
+
+                <div class="foot_bottom">
+                    <p>롯데스위트몰의 모든 콘텐츠는 저작권의 보호를 받고 있습니다.</p>
+                    <div class="info">
+                        롯데제과㈜ | 주소 : 서울특별시 영등포구 양평로21길 10 (양평동5가) 롯데제과 | 대표이사 : 이영구 | 대표번호 : 1522-0071 평일 : 10:00 –
+                        17:00 (주말, 공휴일 휴무)<br>
+                        사업자등록번호 : 186-81-00924 <a href="#">사업자정보확인</a> | 통신판매업 신고번호 : 2017-서울영등포-1471호<br>개인정보관리 책임자 :
+                        배성우
+                    </div>
+
+                    <ul class="mobile_info">
+                        <li>롯데제과㈜ | 대표이사 : 이영구</li>
+                        <li>주소 : 서울특별시 영등포구 양평로21길 10 (양평동5가) 롯데제과</li>
+                        <li>대표번호 : 1522-0071</li>
+                        <li>평일 : 10:00 – 17:00 (주말, 공휴일 휴무)</li>
+                        <li>통신판매업신고 : 2017-서울영등포-1471호</li>
+                        <li>개인정보관리 책임자 : 배성우</li>
+                    </ul><!-- ★모바일 인포 -->
+
+                    <ul class="sns_btn">
+                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+                    </ul>
+                    <span>KCP 구매안전서비스</span>
+                    <em>고객님은 안전거래를 위해 현금 등으로 결제시 저희 쇼핑몰에서 가입한 구매안전 (에스크로) 서비스를 이용하실 수 있습니다.</em>
+                    <div class="copyright">
+                        Copyright LOTTE CONFECTIONERY Co., LTD. All rights reserved.
+                    </div>
+
+                </div><!-- //foot_bottom -->
+            </div><!-- //join_container -->
+        </div><!-- //footer -->
+    </div>
+
+
+    <!-- JQuery CDN연결 -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+    <script>
+        $('#all_agree').click(function () { //전체 체크박스 클릭
+            if ($('#all_agree').prop("checked")) {
+                $('.together_check').prop("checked", true);
+            } else {
+                $('.together_check').prop("checked", false);
+            }
+        });
+        $('.together_check').click(function () { //전체 체크박스 선택중 체크박스 하나를 풀었을때 "전체" 체크해제
+            if ($('input[name="sub_agree"]:checked').length == 4) {
+                $('#all_agree').prop("checked", true);
+            } else {
+                $('#all_agree').prop("checked", false);
+            }
+        });
+    </script>
+</body>
+
+</html>
